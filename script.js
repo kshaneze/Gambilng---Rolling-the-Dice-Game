@@ -13,13 +13,25 @@ const restartBtn = document.querySelector('.btn--new');
 
 let currentScore, totalScores, activePlayer, playing;
 
-totalScores = [0, 0];
-playing = true;
-activePlayer = 0;
-currentScore = 0;
+const restartEverything = function () {
+  totalScores = [0, 0];
+  playing = true;
+  activePlayer = 0;
+  currentScore = 0;
 
-score1.textContent = 0;
-score2.textContent = 0;
+  score1.textContent = 0;
+  score2.textContent = 0;
+
+  currentPlayerScore1.textContent = 0;
+  currentPlayerScore2.textContent = 0;
+
+  player0.classList.remove('player--winner');
+  player1.classList.remove('player--winner');
+  player0.classList.add('player--active');
+  player1.classList.remove('player--active');
+};
+
+restartEverything();
 
 // Implementing functionality of switching the player
 const switchPlayer = function () {
@@ -77,16 +89,4 @@ holdBtn.addEventListener('click', function () {
   }
 });
 
-const restartEverything = function () {
-  totalScores = [0, 0];
-  playing = true;
-  activePlayer = 0;
-  currentScore = 0;
-
-  score1.textContent = 0;
-  score2.textContent = 0;
-
-  currentPlayerScore1.textContent = 0;
-  currentPlayerScore2.textContent = 0;
-};
 restartBtn.addEventListener('click', restartEverything);
