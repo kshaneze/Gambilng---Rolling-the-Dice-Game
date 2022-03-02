@@ -13,50 +13,59 @@ const restartBtn = document.querySelector('.btn--new');
 
 let currentScore, totalScores, activePlayer, playing;
 
-const restartEverything = function () {
-  totalScores = [0, 0];
-  playing = true;
-  activePlayer = 0;
+const startingPostions = function () {
+  // Current score for players
   currentScore = 0;
-
+  // finally or saved scores for player 1 and 2
+  totalScores = [0, 0];
+  // Active player is the one at postion 0
+  activePlayer = 0;
+  // I will use this to stop game from continue after player reaches >= 100
+  playing = true;
   score1.textContent = 0;
   score2.textContent = 0;
-
   currentPlayerScore1.textContent = 0;
   currentPlayerScore2.textContent = 0;
-
+  // Remove player--winner class
   player0.classList.remove('player--winner');
   player1.classList.remove('player--winner');
+  // Starting player is always player 1
   player0.classList.add('player--active');
   player1.classList.remove('player--active');
 };
+startingPostions();
 
-restartEverything();
-
-// Implementing functionality of switching the player
+// Switching the player funcionality
 const switchPlayer = function () {
+  // Selecting current player and setting his current score  to 0
   document.getElementById(`current--${activePlayer}`).textContent = 0;
+  // Determing who is active player
   activePlayer = activePlayer === 0 ? 1 : 0;
+  // Setting current score to 0
   currentScore = 0;
+  // Removing and adding player active class to current player
   player0.classList.toggle('player--active');
   player1.classList.toggle('player--active');
 };
-// Hide dice at the beggining
+
+// Hide dice Photo
 dicePhoto.style.display = 'none';
 
-// Adding click event on roll dice button so i can implement evrerything that should happend when roll dice is clicked
+// Adding event listener to dice roll button
 rollDice.addEventListener('click', function () {
   if (playing) {
-    // Generate random number between 1 and 6
+    // Generate random dice roll
     let randomDice = Math.trunc(Math.random() * 6) + 1;
-    // Display photo of dice equal to that number
+    // Display photo of dice equal to random dice roll
     dicePhoto.src = `dice-${randomDice}.png`;
-    // Show dice when button is clicked
     dicePhoto.style.display = 'block';
 
-    // Check if that random generated number is 1
+    // Implementing game logic
+    // What happens if we roll 2, 3, 4, 5 ,6 (randomDice !== 1) not 1
     if (randomDice !== 1) {
+      // Adding value of random dice to current score
       currentScore += randomDice;
+      // Adding current score to current player
       document.getElementById(`current--${activePlayer}`).textContent =
         currentScore;
     } else {
@@ -65,28 +74,28 @@ rollDice.addEventListener('click', function () {
   }
 });
 
-// Adding click event to hold button and implementing functionality
+// Adding event listener to hold button
 holdBtn.addEventListener('click', function () {
   if (playing) {
-    // 1. Add current score to active player's score
+    // Add current score of active player to total score of active player
     totalScores[activePlayer] += currentScore;
-    // Display that score
+    // And displaying that score
     document.getElementById(`score--${activePlayer}`).textContent =
       totalScores[activePlayer];
 
-    // Check if player score is more or equal to 100;
-    if (totalScores[activePlayer] >= 20) {
+    // Check if player reached 100, and if he did, he won!
+    if (totalScores[activePlayer] >= 10) {
+      // Stop funcionality of all buttons
       playing = false;
-
-      dicePhoto.style.display = 'none';
-
+      // Adding winning class
       document
         .querySelector(`.player--${activePlayer}`)
         .classList.add('player--winner');
     } else {
+      // Switch player if he didnt reach 100
       switchPlayer();
     }
   }
 });
-
-restartBtn.addEventListener('click', restartEverything);
+// Adding event listener to Restart button
+restartBtn.addEventListener('click', startingPostions);
