@@ -16,9 +16,9 @@ let currentScore, totalScores, activePlayer, playing;
 const startingPostions = function () {
   // Current score for players
   currentScore = 0;
-  // finally or saved scores for player 1 and 2
+  // final or saved scores for player 1 and 2
   totalScores = [0, 0];
-  // Active player is the one at postion 0
+  // At the beggining Active player is the one at postion 0
   activePlayer = 0;
   // I will use this to stop game from continue after player reaches >= 100
   playing = true;
@@ -84,7 +84,7 @@ holdBtn.addEventListener('click', function () {
       totalScores[activePlayer];
 
     // Check if player reached 100, and if he did, he won!
-    if (totalScores[activePlayer] >= 10) {
+    if (totalScores[activePlayer] >= 100) {
       // Stop funcionality of all buttons
       playing = false;
       // Adding winning class
