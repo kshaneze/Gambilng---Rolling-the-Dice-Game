@@ -48,7 +48,7 @@ const switchPlayer = function () {
   player1.classList.toggle('player--active');
 };
 
-// Hide dice Photo
+// Hide dice Photo at the Start
 dicePhoto.style.display = 'none';
 
 // Adding event listener to dice roll button
@@ -56,7 +56,7 @@ rollDice.addEventListener('click', function () {
   if (playing) {
     // Generate random dice roll
     let randomDice = Math.trunc(Math.random() * 6) + 1;
-    // Display photo of dice equal to random dice roll
+    // Display photo of dice equal to random dice roll number
     dicePhoto.src = `dice-${randomDice}.png`;
     dicePhoto.style.display = 'block';
 
@@ -69,6 +69,7 @@ rollDice.addEventListener('click', function () {
       document.getElementById(`current--${activePlayer}`).textContent =
         currentScore;
     } else {
+      // If we roll one  SwitchPlayer
       switchPlayer();
     }
   }
